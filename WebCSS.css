@@ -1,0 +1,106 @@
+body {
+    background-color: rgb(9, 0, 76);
+}
+p {
+    color: white;
+    font-family:'Beck Extra Bold';
+}
+
+.skystone_hand_container {
+    /* display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end; */
+    
+    display: grid;
+    grid-template-columns: auto auto auto;
+
+    border: 5px solid white;
+    text-align: center; 
+
+    margin: auto;
+    margin-top: 20px;
+
+    width: 775px; 
+    height: 400px;
+}
+
+.skystone_grid_container {
+    /* display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end; */
+
+    display: grid;
+    grid-template-columns: auto auto auto;
+
+    border: 5px solid white;
+    margin: auto;
+    text-align: center; 
+
+    width: 750px; 
+    height: 750px;
+}
+
+.skystone_grid_box {
+    border: 2px solid white;
+    text-align: center;
+
+    width: 245px;
+    height: 245px;
+
+    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+
+    padding: 1px;
+    /* float: left; */
+}
+
+.skystone_unused {
+    padding: auto;
+    margin: auto;
+    width: 250px;
+    height: 250px;
+    opacity: 0;
+}
+
+.skystone {
+    padding: auto;
+    margin: auto;
+    width: 250px;
+    height: 250px;
+    animation: visible_skystone 1s ease backwards
+}
+
+.skystone_hand {
+    padding: auto;
+    margin: auto;
+    width: 200px;
+    height: 200px;
+}
+
+.skystone_hand_selected {
+    padding: auto;
+    margin: auto;
+    width: 200px;
+    height: 200px;
+    animation: select_skystone 1s ease forwards;
+}
+
+@keyframes example {
+    100% {transform: translate(50px, 100px)}
+}
+
+@keyframes enemy_box {
+    100% {background-color: crimson;} 
+}
+@keyframes player_box {
+    100% {background-color: cornflowerblue;} 
+}
+
+@keyframes visible_skystone {
+    100% {opacity: 1;} 
+}
+
+@keyframes select_skystone {
+    100% {transform: scale(1.1,1.1); transform: rotate(90,0);} 
+}
