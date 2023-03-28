@@ -41,10 +41,14 @@ wsServer.on('connection', function(connection) {
         delete users[userId];
         broadcastMessage(json);
     }
-
     // User disconnected
     connection.on('close', () => handleDisconnect(userId));
 
+    connection.on('message', function message(data) {
+        console.log('received: %s', data);
+    });
+
+    connection.send("Hello")
 });
 
 function broadcastMessage(json) {
