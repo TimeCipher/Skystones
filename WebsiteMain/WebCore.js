@@ -9,3 +9,7 @@ Socket.onmessage = ({data}) => {
     console.log(data);
     Socket.send("Hi");
 };
+
+function select_skystone_hand(elem) {
+    console.log(elem)
+}

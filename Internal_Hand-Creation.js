@@ -33,13 +33,7 @@ wsServer.on('connection', function(connection) {
 
     function handleDisconnect(userId) {
         console.log(`${userId} disconnected.`);
-        const json = { type: typesDef.USER_EVENT };
-        const username = users[userId]?.username || userId;
-        userActivity.push(`${username} left the document`);
-        json.data = { users, userActivity };
         delete clients[userId];
-        delete users[userId];
-        broadcastMessage(json);
     }
     // User disconnected
     connection.on('close', () => handleDisconnect(userId));
