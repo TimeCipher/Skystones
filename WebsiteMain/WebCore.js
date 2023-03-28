@@ -10,6 +10,44 @@ Socket.onmessage = ({data}) => {
     Socket.send("Hi");
 };
 
-function select_skystone_hand(elem) {
-    console.log(elem)
+function hasClass(el, className)
+{
+    if (el.classList)
+        return el.classList.contains(className);
+    return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'));
 }
+
+function addClass(el, className)
+{
+    if (el.classList)
+        el.classList.add(className)
+    else if (!hasClass(el, className))
+        el.className += " " + className;
+}
+
+function removeClass(el, className)
+{
+    if (el.classList)
+        el.classList.remove(className)
+    else if (hasClass(el, className))
+    {
+        var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+        el.className = el.className.replace(reg, ' ');
+    }
+}
+
+var Selected_SkyStone = null;
+
+function select_skystone_hand(elem) {
+    if (hasClass(elem, "skystone_hand_selected")) {return}
+
+    console.log(elem);
+
+    var menu = document.getElementsByTagName('div');
+    for (var i = 0; menu[i]; i++) {
+        if (hasClass(elem, "skystone_hand_selected")) {
+            removeClass(elem, "skystone_hand_selected");
+        };
+    };
+};
+
