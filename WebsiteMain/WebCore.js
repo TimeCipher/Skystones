@@ -10,6 +10,8 @@ Socket.onmessage = ({data}) => {
     Socket.send("Hi");
 };
 
+
+// Class Editing Functions
 function hasClass(el, className)
 {
     if (el.classList)
@@ -35,6 +37,7 @@ function removeClass(el, className)
         el.className = el.className.replace(reg, ' ');
     }
 }
+// ------------------------------------
 
 var Selected_SkyStone = null;
 
@@ -42,12 +45,21 @@ function select_skystone_hand(elem) {
     if (hasClass(elem, "skystone_hand_selected")) {return}
 
     console.log(elem);
+    console.log(elem.src.split("/"));
 
-    var menu = document.getElementsByTagName('div');
+    var StoneSource_Split = elem.src.split("/");
+    var StoneSource_Name = StoneSource_Split[StoneSource_Split.length - 1]
+    var StoneSource_Details = StoneSource_Name.split(".")[0].split("-")
+
+    console.log(StoneSource_Name, StoneSource_Details[2][0])
+
+    var menu = document.getElementsByTagName('img');
     for (var i = 0; menu[i]; i++) {
-        if (hasClass(elem, "skystone_hand_selected")) {
-            removeClass(elem, "skystone_hand_selected");
+        if (hasClass(menu[i], "skystone_hand_selected")) {
+            removeClass(menu[i], "skystone_hand_selected");
         };
     };
+
+    addClass(elem, "skystone_hand_selected");
 };
 
