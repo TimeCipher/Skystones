@@ -20,17 +20,20 @@ class Usr {
 }
 
 
-const Clients = {};
+var Clients = [];
 
 wsServer.on('connection', function(connection) {
     console.log(`Recieved a new connection.`);
-    var ConnectedUsr = new Usr(uuidv4(),connection)
+    var ConnectedUsr = new Usr(uuidv4(),connection);
+    Clients.push(ConnectedUsr);
 
-    connection.on('close', () => function() {
+    connection.on('close', () => {
       console.log("Someone Disconnected.");
-      for (let i in Clients) {
+      for (var i in Clients) {
+        // console.log(Clients[i].UserId, ConnectedUsr.UserId)
         if (Clients[i].UserId == ConnectedUsr.UserId) {
-
+          Clients.splice(i,1);
+          console.log("Dropped Usr from Array");
         }
       }
     });
