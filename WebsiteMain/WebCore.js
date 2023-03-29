@@ -3,7 +3,6 @@
 
 //Used to actually run the client of the webpage
 
-const { fs } = require('fs');
 var Socket = new WebSocket("ws://127.0.0.1:9752/")
 
 Socket.onmessage = ({data}) => {

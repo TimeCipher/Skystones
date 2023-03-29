@@ -1,6 +1,7 @@
 // Card - Type - Top - Left - Bottom - Right
 // lance - nil - 01 -01 - 00 - 00
 
+const { fsp } = require("fs/promises")
 const { WebSocketServer } = require('ws');
 const http = require('http');
 const { v4: uuidv4 } = require('uuid');
@@ -58,3 +59,15 @@ class Skystone {
     this.Right = Right;
   }
 }
+
+function ReadDirectory(path) {
+  try {
+    const files = fsp.readdir(path);
+    for (const file of files)
+      console.log(file);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+ReadDirectory("./WebsiteMain/Skystones");
