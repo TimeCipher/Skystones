@@ -84,10 +84,10 @@ function select_skystone_hand(elem) {
 }
 
 function construct_image_src(SkystoneObj) {
-    var SrcStr = `skystone-${SkystoneObj.Name}-${SkystoneObj.Top}${SkystoneObj.Left}${SkystoneObj.Bottom}${SkystoneObj.Right}.png`;
+    var SrcStr = `skystone-${SkystoneObj.Name}-${SkystoneObj.Top}${SkystoneObj.Left}${SkystoneObj.Bottom}${SkystoneObj.Right}`;
     if (SkystoneObj.Element != null) {
         SrcStr = `${SrcStr}-${SkystoneObj.Element}`
     }
-    SrcStr = SrcStr+".png"
+    SrcStr = "./Skystones/"+SrcStr+".png"
     return SrcStr;
 }
