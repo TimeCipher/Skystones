@@ -5,12 +5,12 @@ const { WebSocketServer } = require('ws');
 const http = require('http');
 const { v4: uuidv4 } = require('uuid');
 
-
 const server = http.createServer();
 const wsServer = new WebSocketServer({ server });
 server.listen(9752, () => {
   console.log(`WebSocket Server Running`);
 });
+
 
 class Usr {
   constructor(UserId, Connection) {
@@ -19,9 +19,26 @@ class Usr {
   }
 }
 
+class MessageObj {
+  constructor(Cmd,PassedObj) {
+    this.Cmd = Cmd;
+    this.Obj = PassedObj;
+  }
+}
+
+class Skystone {
+  constructor(Name,Element,Top,Right,Bottom,Left,Position) {
+    this.Name = Name;
+    this.Element = Element;
+    this.Top = Top;
+    this.Right = Right;
+    this.Bottom = Bottom;
+    this.Left = Left;
+    this.Position = Position;
+  }
+}
 
 var Clients = [];
-
 wsServer.on('connection', function(connection) {
     console.log(`Recieved a new connection.`);
     var ConnectedUsr = new Usr(uuidv4(),connection);
@@ -46,25 +63,10 @@ wsServer.on('connection', function(connection) {
 });
 
 
-
-
-class Skystone {
-  constructor(Name,Element,Top,Right,Bottom,Left,Position) {
-    this.Name = Name;
-    this.Element = Element;
-    this.Top = Top;
-    this.Right = Right;
-    this.Bottom = Bottom;
-    this.Left = Left;
-    this.Position = Position;
-  }
-}
-
 // There is 80 Skystones
 // I just need a way to get a random skystone
 // I know theres probably a FAR Better way to do this *cough like reading the directory but hey why would that cooperate?! cough* 
-var SkystoneList = 
-[
+var SkystoneList = [
   "archer-1010","archer-2020","archer-3030",
   "armored-1131-w",
   "axecutioner-3333",
@@ -121,12 +123,16 @@ function GrabRandomSkystone() {
   
   return RandomSkystone
 }
+// console.log(GrabRandomSkystone());
 
-console.log(GrabRandomSkystone())
+function Compile5Stones() {
+  var i = 5;
+  var TempHand = [];
 
-class MessageObj {
-  constructor(Cmd,PassedObj) {
-    this.Cmd = Cmd;
-    this.Obj = PassedObj;
+  while (i > 0) {
+    i -= 1;
+    TempHand.push(GrabRandomSkystone());
   }
+
+  return TempHand;
 }
