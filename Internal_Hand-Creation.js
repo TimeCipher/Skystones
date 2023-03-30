@@ -66,7 +66,9 @@ wsServer.on('connection', function(connection) {
         console.log('received: %s', data);
     });
 
-    connection.send("Hello");
+    Handle_Game(ConnectedUsr);
+
+    //connection.send("Hello");
 });
 
 

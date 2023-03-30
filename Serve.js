@@ -18,10 +18,11 @@
 
 const express = require('express');
 let app = express();
-app.use(express.static("./"))
+app.use(express.static("./WebsiteMain"))
 
 app.get('/', function(req, res){
-    res.sendFile('Core.html', {root: __dirname});
+    res.sendFile('Core.html', {root: __dirname + "\\WebsiteMain"});
+    // console.log({root: __dirname + "\\WebsiteMain"})
 });
 
 app.listen(9751)
