@@ -40,16 +40,16 @@ function removeClass(el, className)
 // ------------------------------------
 
 class Skystone {
-    constructor(Name,Element,Top,Left,Bottom,Right,Position) {
+    constructor(Name,Element,Top,Right,Bottom,Left,Position) {
       this.Name = Name;
       this.Element = Element;
       this.Top = Top;
-      this.Left = Left;
-      this.Bottom = Bottom;
       this.Right = Right;
+      this.Bottom = Bottom;
+      this.Left = Left;
       this.Position = Position;
     }
-}
+  }
 
 var Selected_SkyStone = null;
 var Skystones_Hand = {}
