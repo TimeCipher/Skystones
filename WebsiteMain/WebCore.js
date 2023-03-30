@@ -47,11 +47,12 @@ class Skystone {
       this.Left = Left;
       this.Bottom = Bottom;
       this.Right = Right;
-      this.Position = Position
+      this.Position = Position;
     }
 }
 
 var Selected_SkyStone = null;
+var Skystones_Hand = {}
 
 function select_skystone_hand(elem) {
     if (hasClass(elem, "skystone_hand_selected")) {return};
@@ -64,7 +65,7 @@ function select_skystone_hand(elem) {
     var StoneSource_Details = StoneSource_Name.split(".")[0].split("-");
     // console.log(StoneSource_Name, StoneSource_Details[2][0]);
 
-    Selected_SkyStone = new Skystone(StoneSource_Details[1],null,StoneSource_Details[2][0],StoneSource_Details[2][1],StoneSource_Details[2][2],StoneSource_Details[2][3],"Hand");
+    Selected_SkyStone = new Skystone(StoneSource_Details[1],null,StoneSource_Details[2][0],StoneSource_Details[2][1],StoneSource_Details[2][2],StoneSource_Details[2][3],elem.id);
 
     var menu = document.getElementsByTagName('img');
     for (var i = 0; menu[i]; i++) {
@@ -78,5 +79,9 @@ function select_skystone_hand(elem) {
 
 function construct_image_src(SkystoneObj) {
     var SrcStr = `skystone-${SkystoneObj.Name}-${SkystoneObj.Top}${SkystoneObj.Left}${SkystoneObj.Bottom}${SkystoneObj.Right}.png`;
+    if (SkystoneObj.Element != null) {
+        SrcStr = `${SrcStr}-${SkystoneObj.Element}`
+    }
+    SrcStr = SrcStr+".png"
     return SrcStr;
 }
