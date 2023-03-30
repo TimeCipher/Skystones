@@ -16,6 +16,13 @@ class Usr {
   constructor(UserId, Connection) {
     this.UserId = UserId;
     this.Connection = Connection;
+    this.Hand = null;
+  }
+}
+
+class Enemy {
+  constructor(Hand) {
+    this.Hand = Hand;
   }
 }
 
@@ -128,11 +135,32 @@ function GrabRandomSkystone() {
 function Compile5Stones() {
   var i = 5;
   var TempHand = [];
-
   while (i > 0) {
     i -= 1;
     TempHand.push(GrabRandomSkystone());
   }
+  return TempHand;
+}
+
+function Compile5Stones_Usr() {
+  var i = 5;
+  var TempHand = [];
+
+  while (i > 0) {
+    i -= 1;
+    var TempStone = GrabRandomSkystone();
+    TempStone.Position = `SH_${i}`
+    TempHand.push(TempStone);
+  }
 
   return TempHand;
+}
+
+function Handle_Game(Plr) {
+  Plr.Hand = Compile5Stones_Usr();
+  var Ai = new Enemy(Compile5Stones());
+
+  //Set User Hand
+  Plr.Connection.send(JSON.stringify(new MessageObj("SetUsrHand",Plr.Hand)));
+
 }
