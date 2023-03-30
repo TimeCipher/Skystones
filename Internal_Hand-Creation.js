@@ -103,7 +103,26 @@ var SkystoneList =
   "trogmander-1222-m",
   "ultron-222-t",
   "wanderer-1212-u"
-]
+];
+
+function GrabRandomSkystone() {
+  //Random Number 0-79
+  //Index said number with list
+  //Split retrieved item and compile to object
+  var RandomisedNum = 1;
+  var RandomStone = SkystoneList[RandomisedNum];
+  var RStoneDetails = RandomStone.split("-");
+
+  var RandomSkystone = new Skystone(RStoneDetails[0],null,RStoneDetails[1][0],RStoneDetails[1][1],RStoneDetails[1][2],RStoneDetails[1][3],null)
+  
+  if (RStoneDetails[2]) {
+    RandomSkystone.Element = RStoneDetails[2]
+  }
+  
+  return RandomSkystone
+}
+
+console.log(GrabRandomSkystone())
 
 class MessageObj {
   constructor(Cmd,PassedObj) {
