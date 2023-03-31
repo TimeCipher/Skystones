@@ -33,6 +33,13 @@ class MessageObj {
   }
 }
 
+class PlayedWrapper {
+  constructor(Plr,Stone) {
+    this.Plr = Plr;
+    this.Skystone = Stone;
+  }
+}
+
 class Skystone {
   constructor(Name,Element,Top,Right,Bottom,Left,Position) {
     this.Name = Name;
@@ -60,10 +67,6 @@ wsServer.on('connection', function(connection) {
           console.log("Dropped Usr from Array");
         }
       }
-    });
-
-    connection.on('message', function message(data) {
-      console.log('received: %s', data);
     });
 
     Handle_Game(ConnectedUsr);
@@ -170,6 +173,26 @@ function Compile5Stones_Usr() {
   return TempHand;
 }
 
+function CheckForCopy(StoneA, StoneB) {
+  var isCopy = false;
+
+  if (StoneA.Name == StoneB.Name) {
+    if (StoneA.Element == StoneB.Element) {
+      if (StoneA.Top == StoneB.Top) {
+        if (StoneA.Right == StoneB.Right) {
+          if (StoneA.Bottom == StoneB.Bottom) {
+            if (StoneA.Left == StoneB.Left) {
+              isCopy = true;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return isCopy;
+}
+
 function Handle_Game(Plr) {
   Plr.Hand = Compile5Stones_Usr();
   var Ai = new Enemy(Compile5Stones());
@@ -177,5 +200,20 @@ function Handle_Game(Plr) {
 
   //Set User Hand
   Plr.Connection.send(JSON.stringify(new MessageObj("SetUsrHand",Plr.Hand)));
+
+  Plr.Connection.on('message', function message(data) {
+    console.log('received: %s', data);
+    var Obj = JSON.parse(data);
+
+    if (Obj.Cmd == "PlayUsrStone") {
+      for (var PlayedStone of Table) {
+        if (CheckForCopy(PlayedStone,Obj.Obj)) {
+          return //Playing the exact same card
+        }
+      }
+
+    }
+  });
+
 
 }
