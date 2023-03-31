@@ -120,7 +120,7 @@ function GrabRandomSkystone() {
   //Random Number 0-79
   //Index said number with list
   //Split retrieved item and compile to object
-  var RandomisedNum = 1;
+  var RandomisedNum = Math.floor(Math.random() * 80); //1;
   var RandomStone = SkystoneList[RandomisedNum];
   var RStoneDetails = RandomStone.split("-");
 
@@ -149,10 +149,10 @@ function Compile5Stones_Usr() {
   var TempHand = [];
 
   while (i > 0) {
-    i -= 1;
     var TempStone = GrabRandomSkystone();
     TempStone.Position = `SH_${i}`
     TempHand.push(TempStone);
+    i -= 1;
   }
 
   return TempHand;
