@@ -115,7 +115,7 @@ var SkystoneList = [
   "sniper-0004",
   "spiderling-0100","spiderling-0200","spiderling-0300-a",
   "trogmander-1222-m",
-  "ultron-222-t",
+  "ultron-2222-t",
   "wanderer-1212-u"
 ];
 
@@ -212,8 +212,7 @@ function Handle_Game(Plr) {
         }
       }
 
+      var PlayerPlaced = new PlayedWrapper(Plr.UserId,Obj.Obj);
     }
   });
-
-
 }
