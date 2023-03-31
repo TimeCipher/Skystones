@@ -62,13 +62,15 @@ class Skystone {
       this.Left = Left;
       this.Position = Position;
     }
-  }
+}
 
 var Selected_SkyStone = null;
+var Selected_SkyStone_Elem = null;
 var Skystones_Hand = {}
 
 function select_skystone_hand(elem) {
     if (hasClass(elem, "skystone_hand_selected")) {return};
+    if (hasClass(elem, "skystone_hand_used")) {return};
 
     console.log(elem);
     console.log(elem.src.split("/"));
@@ -91,6 +93,7 @@ function select_skystone_hand(elem) {
         };
     };
 
+    Selected_SkyStone_Elem = elem;
     addClass(elem, "skystone_hand_selected");
 }
 
@@ -109,6 +112,16 @@ function select_skystone_grid(elem) {
             elem.src = construct_image_src(Selected_SkyStone);
             removeClass(elem, "skystone_unused");
             addClass(elem, "skystone");
+
+            removeClass(Selected_SkyStone_Elem,"skystone_hand_selected");
+            removeClass(Selected_SkyStone_Elem,"skystone_hand");
+            addClass(Selected_SkyStone_Elem,"skystone_hand_used");
+
+            Selected_SkyStone.Position = elem.id;
+            Socket.send(JSON.stringify(new MessageObj("PlayUsrStone", Selected_SkyStone)));
+
+            Selected_SkyStone = null;
+            Selected_SkyStone_Elem = null;
         }
     }
 }

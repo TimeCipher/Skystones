@@ -78,16 +78,20 @@ p {
     height: 200px;
 }
 
+.skystone_hand_used {
+    padding: auto;
+    margin: auto;
+    width: 200px;
+    height: 200px;
+    opacity: 0;
+}
+
 .skystone_hand_selected {
     padding: auto;
     margin: auto;
     width: 200px;
     height: 200px;
     animation: select_skystone 1s ease forwards;
-}
-
-@keyframes example {
-    100% {transform: translate(50px, 100px)}
 }
 
 @keyframes enemy_box {
