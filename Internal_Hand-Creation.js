@@ -63,7 +63,7 @@ wsServer.on('connection', function(connection) {
     });
 
     connection.on('message', function message(data) {
-        console.log('received: %s', data);
+      console.log('received: %s', data);
     });
 
     Handle_Game(ConnectedUsr);
@@ -150,9 +150,21 @@ function Compile5Stones_Usr() {
 
   while (i > 0) {
     var TempStone = GrabRandomSkystone();
-    TempStone.Position = `SH_${i}`
-    TempHand.push(TempStone);
-    i -= 1;
+    var StoneNotDuped = true;
+
+    for (var LastTempStone of TempHand) {
+      if (LastTempStone.Name == TempStone.Name) {
+        StoneNotDuped = false;
+      } else if (LastTempStone.Element == TempStone.Element) {
+        StoneNotDuped = false;
+      }
+    }
+
+    if (StoneNotDuped) {
+      TempStone.Position = `SH_${i}`;
+      TempHand.push(TempStone);
+      i -= 1;
+    }
   }
 
   return TempHand;
@@ -161,6 +173,7 @@ function Compile5Stones_Usr() {
 function Handle_Game(Plr) {
   Plr.Hand = Compile5Stones_Usr();
   var Ai = new Enemy(Compile5Stones());
+  var Table = [];
 
   //Set User Hand
   Plr.Connection.send(JSON.stringify(new MessageObj("SetUsrHand",Plr.Hand)));

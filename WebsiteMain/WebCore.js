@@ -3,6 +3,13 @@
 
 //Used to actually run the client of the webpage
 
+class MessageObj {
+    constructor(Cmd,PassedObj) {
+      this.Cmd = Cmd;
+      this.Obj = PassedObj;
+    }
+}
+
 var Socket = new WebSocket("ws://127.0.0.1:9752/")
 
 Socket.onmessage = ({data}) => {
@@ -73,6 +80,10 @@ function select_skystone_hand(elem) {
 
     Selected_SkyStone = new Skystone(StoneSource_Details[1],null,StoneSource_Details[2][0],StoneSource_Details[2][1],StoneSource_Details[2][2],StoneSource_Details[2][3],elem.id);
 
+    if (StoneSource_Details[3]) {
+        Selected_SkyStone.Element = StoneSource_Details[3]
+    }
+
     var menu = document.getElementsByTagName('img');
     for (var i = 0; menu[i]; i++) {
         if (hasClass(menu[i], "skystone_hand_selected")) {
@@ -84,10 +95,20 @@ function select_skystone_hand(elem) {
 }
 
 function construct_image_src(SkystoneObj) {
-    var SrcStr = `skystone-${SkystoneObj.Name}-${SkystoneObj.Top}${SkystoneObj.Left}${SkystoneObj.Bottom}${SkystoneObj.Right}`;
+    var SrcStr = `skystone-${SkystoneObj.Name}-${SkystoneObj.Top}${SkystoneObj.Right}${SkystoneObj.Bottom}${SkystoneObj.Left}`;
     if (SkystoneObj.Element != null) {
         SrcStr = `${SrcStr}-${SkystoneObj.Element}`
     }
     SrcStr = "./Skystones/"+SrcStr+".png"
     return SrcStr;
+}
+
+function select_skystone_grid(elem) {
+    if (Selected_SkyStone != null) {
+        if (hasClass(elem, "skystone_unused")) {
+            elem.src = construct_image_src(Selected_SkyStone);
+            removeClass(elem, "skystone_unused");
+            addClass(elem, "skystone");
+        }
+    }
 }
