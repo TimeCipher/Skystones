@@ -23,6 +23,7 @@ class Usr {
 class Enemy {
   constructor(Hand) {
     this.Hand = Hand;
+    this.UserId = "ENEMY";
   }
 }
 
@@ -193,6 +194,17 @@ function CheckForCopy(StoneA, StoneB) {
   return isCopy;
 }
 
+function TakeStone(Plr,StoneA,StoneB) {
+  if (Plr.UserId != "ENEMY") {
+    if (StoneA.Plr == Plr) {
+      Plr.Connection.send(JSON.stringify(new MessageObj("ChangeControlOfStone_Enemy",StoneA)));
+    } else {
+      Plr.Connection.send(JSON.stringify(new MessageObj("ChangeControlOfStone_User",StoneA)));
+    }
+  }
+  StoneA.Plr = StoneB.Plr;
+}
+
 function Handle_Game(Plr) {
   Plr.Hand = Compile5Stones_Usr();
   var Ai = new Enemy(Compile5Stones());
@@ -200,6 +212,7 @@ function Handle_Game(Plr) {
 
   //Set User Hand
   Plr.Connection.send(JSON.stringify(new MessageObj("SetUsrHand",Plr.Hand)));
+  Plr.Connection.send()
 
   Plr.Connection.on('message', function message(data) {
     console.log('received: %s', data);
@@ -213,6 +226,67 @@ function Handle_Game(Plr) {
       }
 
       var PlayerPlaced = new PlayedWrapper(Plr.UserId,Obj.Obj);
+      for (var PlayedStone of Table) {
+        if (PlayedStone.Stone.Position == PlayerPlaced.Stone.Position) {
+          return //Playing the exact same card
+        }
+      }
+
+      for (var PlayedStone of Table) {
+        if (PlayedStone.Plr != PlayerPlaced.Plr) {
+          switch (PlayerPlaced.Stone.Position) {
+            case "SGB_1":
+              switch (PlayedStone.Stone.Position) {
+                case "SGB_2":
+                  if (PlayerPlaced.Stone.Right > PlayedStone.Stone.Left) {
+                    TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
+                  }
+                  break;
+                case "SGB_4":
+                  if (PlayerPlaced.Stone.Bottom > PlayedStone.Stone.Top) {
+                    TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
+                  }
+                  break;
+              }
+              break;
+            case "SGB_2":
+              switch (PlayedStone.Stone.Position) {
+                case "SGB_1":
+                  if (PlayerPlaced.Stone.Left > PlayedStone.Stone.Right) {
+                    TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
+                  }
+                  break;
+                case "SGB_3":
+                  if (PlayerPlaced.Stone.Right > PlayedStone.Stone.Left) {
+                    TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
+                  }
+                  break;
+                case "SGB_5":
+                  if (PlayerPlaced.Stone.Bottom > PlayedStone.Stone.Top) {
+                    TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
+                  }
+                  break;
+              }
+              break;
+            case "SGB_3":
+              switch (PlayedStone.Stone.Position) {
+                case "SGB_2":
+                  if (PlayerPlaced.Stone.Left > PlayedStone.Stone.Right) {
+                    TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
+                  }
+                  break;
+                case "SGB_6":
+                  if (PlayerPlaced.Stone.Bottom > PlayedStone.Stone.Top) {
+                    TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
+                  }
+                  break;
+              }
+              break;
+          }
+        }
+      }
+
+      Table.push(PlayerPlaced);
     }
   });
 }
