@@ -82,8 +82,8 @@ function select_skystone_hand(elem) {
     if (hasClass(elem, "skystone_hand_selected")) {return};
     if (hasClass(elem, "skystone_hand_used")) {return};
 
-    console.log(elem);
-    console.log(elem.src.split("/"));
+    // console.log(elem);
+    // console.log(elem.src.split("/"));
 
     var StoneSource_Split = elem.src.split("/");
     var StoneSource_Name = StoneSource_Split[StoneSource_Split.length - 1];

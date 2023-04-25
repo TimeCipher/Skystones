@@ -37,7 +37,7 @@ class MessageObj {
 class PlayedWrapper {
   constructor(Plr,Stone) {
     this.Plr = Plr;
-    this.Skystone = Stone;
+    this.Stone = Stone;
   }
 }
 
@@ -212,7 +212,7 @@ function Handle_Game(Plr) {
 
   //Set User Hand
   Plr.Connection.send(JSON.stringify(new MessageObj("SetUsrHand",Plr.Hand)));
-  Plr.Connection.send()
+  // Plr.Connection.send()
 
   Plr.Connection.on('message', function message(data) {
     console.log('received: %s', data);
@@ -235,53 +235,162 @@ function Handle_Game(Plr) {
       for (var PlayedStone of Table) {
         if (PlayedStone.Plr != PlayerPlaced.Plr) {
           switch (PlayerPlaced.Stone.Position) {
-            case "SGB_1":
+            case "iSGB_1":
               switch (PlayedStone.Stone.Position) {
-                case "SGB_2":
+                case "iSGB_2":
                   if (PlayerPlaced.Stone.Right > PlayedStone.Stone.Left) {
                     TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
                   }
                   break;
-                case "SGB_4":
+                case "iSGB_4":
                   if (PlayerPlaced.Stone.Bottom > PlayedStone.Stone.Top) {
                     TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
                   }
                   break;
               }
               break;
-            case "SGB_2":
+            case "iSGB_2":
               switch (PlayedStone.Stone.Position) {
-                case "SGB_1":
+                case "iSGB_1":
                   if (PlayerPlaced.Stone.Left > PlayedStone.Stone.Right) {
                     TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
                   }
                   break;
-                case "SGB_3":
+                case "iSGB_3":
                   if (PlayerPlaced.Stone.Right > PlayedStone.Stone.Left) {
                     TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
                   }
                   break;
-                case "SGB_5":
+                case "iSGB_5":
                   if (PlayerPlaced.Stone.Bottom > PlayedStone.Stone.Top) {
                     TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
                   }
                   break;
               }
               break;
-            case "SGB_3":
+            case "iSGB_3":
               switch (PlayedStone.Stone.Position) {
-                case "SGB_2":
+                case "iSGB_2":
                   if (PlayerPlaced.Stone.Left > PlayedStone.Stone.Right) {
                     TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
                   }
                   break;
-                case "SGB_6":
+                case "iSGB_6":
                   if (PlayerPlaced.Stone.Bottom > PlayedStone.Stone.Top) {
                     TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
                   }
                   break;
               }
-              break;
+            break;
+            case "iSGB_4":
+              switch (PlayedStone.Stone.Position) {
+                case "iSGB_1":
+                  if (PlayerPlaced.Stone.Top > PlayedStone.Stone.Bottom) {
+                    TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
+                  }
+                  break;
+                case "iSGB_5":
+                  if (PlayerPlaced.Stone.Right > PlayedStone.Stone.Left) {
+                    TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
+                  }
+                  break;
+                case "iSGB_7":
+                  if (PlayerPlaced.Stone.Bottom > PlayedStone.Stone.Top) {
+                    TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
+                  }
+                  break;
+              }
+            break;
+            case "iSGB_5":
+              switch (PlayedStone.Stone.Position) {
+                case "iSGB_2":
+                  if (PlayerPlaced.Stone.Top > PlayedStone.Stone.Bottom) {
+                    TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
+                  }
+                  break;
+                case "iSGB_6":
+                  if (PlayerPlaced.Stone.Right > PlayedStone.Stone.Left) {
+                    TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
+                  }
+                  break;
+                case "iSGB_7":
+                  if (PlayerPlaced.Stone.Bottom > PlayedStone.Stone.Top) {
+                    TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
+                  }
+                  break;
+                case "iSGB_4":
+                  if (PlayerPlaced.Stone.Left > PlayedStone.Stone.Right) {
+                    TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
+                  }
+                  break;
+              }
+            break;
+            case "iSGB_6":
+              switch (PlayedStone.Stone.Position) {
+                case "iSGB_3":
+                  if (PlayerPlaced.Stone.Top > PlayedStone.Stone.Bottom) {
+                    TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
+                  }
+                  break;
+                case "iSGB_5":
+                  if (PlayerPlaced.Stone.Left > PlayedStone.Stone.Right) {
+                    TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
+                  }
+                  break;
+                case "iSGB_9":
+                  if (PlayerPlaced.Stone.Bottom > PlayedStone.Stone.Top) {
+                    TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
+                  }
+                  break;
+              }
+            break;
+            case "iSGB_7":
+              switch (PlayedStone.Stone.Position) {
+                case "iSGB_4":
+                  if (PlayerPlaced.Stone.Top > PlayedStone.Stone.Bottom) {
+                    TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
+                  }
+                  break;
+                case "iSGB_8":
+                  if (PlayerPlaced.Stone.Right > PlayedStone.Stone.Left) {
+                    TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
+                  }
+                  break;
+              }
+            break;
+            case "iSGB_8":
+              switch (PlayedStone.Stone.Position) {
+                case "iSGB_5":
+                  if (PlayerPlaced.Stone.Top > PlayedStone.Stone.Bottom) {
+                    TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
+                  }
+                break;
+                case "iSGB_7":
+                  if (PlayerPlaced.Stone.Left > PlayedStone.Stone.Right) {
+                    TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
+                  }
+                break;
+                case "iSGB_9":
+                  if (PlayerPlaced.Stone.Right > PlayedStone.Stone.Left) {
+                    TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
+                  }
+                break;
+              }
+            break;
+            case "iSGB_9":
+              switch (PlayedStone.Stone.Position) {
+                case "iSGB_6":
+                  if (PlayerPlaced.Stone.Top > PlayedStone.Stone.Bottom) {
+                    TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
+                  }
+                break;
+                case "iSGB_8":
+                  if (PlayerPlaced.Stone.Left > PlayedStone.Stone.Right) {
+                    TakeStone(Plr,PlayedStone.Plr,PlayerPlaced.Plr);
+                  }
+                break;
+              }
+            break;
           }
         }
       }
