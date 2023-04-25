@@ -23,12 +23,14 @@ Socket.onmessage = ({data}) => {
             }
         break;
         case "ChangeControlOfStone_Enemy":
-            var GridBox = document.getElementById(Obj.Position);
-            GridBox.style = "animation: enemy_box 1s ease forwards"
+            var GridBox = document.getElementById(Obj.Position.split("i")[1]);
+            // GridBox.style = "animation: enemy_box 1s ease forwards"
+            addClass(GridBox,"skystone_grid_box_enemy");
         break;
-        case "ChangeControlOfStone_Enemy":
-            var GridBox = document.getElementById(Obj.Position);
-            GridBox.style = "animation: enemy_box 1s ease forwards"
+        case "ChangeControlOfStone_User":
+            var GridBox = document.getElementById(Obj.Position.split("i")[1]);
+            // GridBox.style = "animation: player_box 1s ease forwards"
+            addClass(GridBox,"skystone_grid_box_player");
         break;
     }
 };

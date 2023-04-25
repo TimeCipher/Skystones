@@ -232,6 +232,8 @@ function Handle_Game(Plr) {
         }
       }
 
+      Plr.Connection.send(JSON.stringify(new MessageObj("ChangeControlOfStone_User",PlayerPlaced.Stone)));
+
       for (var PlayedStone of Table) {
         if (PlayedStone.Plr != PlayerPlaced.Plr) {
           switch (PlayerPlaced.Stone.Position) {

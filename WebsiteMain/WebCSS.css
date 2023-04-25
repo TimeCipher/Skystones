@@ -55,6 +55,38 @@ p {
     /* float: left; */
 }
 
+.skystone_grid_box_enemy {
+    animation: enemy_box 1s ease forwards;
+    border: 2px solid white;
+    text-align: center;
+
+    width: 245px;
+    height: 245px;
+
+    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+
+    padding: 1px;
+    /* float: left; */
+}
+
+.skystone_grid_box_player {
+    animation: player_box 1s ease forwards;
+    border: 2px solid rgb(0, 136, 255);
+    text-align: center;
+
+    width: 245px;
+    height: 245px;
+
+    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+
+    padding: 1px;
+    /* float: left; */
+}
+
 .skystone_unused {
     padding: auto;
     margin: auto;
