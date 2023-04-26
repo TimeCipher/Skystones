@@ -23,14 +23,30 @@ Socket.onmessage = ({data}) => {
             }
         break;
         case "ChangeControlOfStone_Enemy":
-            var GridBox = document.getElementById(Obj.Position.split("i")[1]);
+            var GridBox = document.getElementById(Obj.Obj.Position.split("i")[1]);
             // GridBox.style = "animation: enemy_box 1s ease forwards"
+            RemoveGridClass(GridBox);
             addClass(GridBox,"skystone_grid_box_enemy");
         break;
         case "ChangeControlOfStone_User":
-            var GridBox = document.getElementById(Obj.Position.split("i")[1]);
+            var GridBox = document.getElementById(Obj.Obj.Position.split("i")[1]);
             // GridBox.style = "animation: player_box 1s ease forwards"
+            RemoveGridClass(GridBox);
             addClass(GridBox,"skystone_grid_box_player");
+        break;
+        case "EnemyPlayStone":
+            console.log(Obj.Obj.Position);
+
+            var Pos = document.getElementById(Obj.Obj.Position)
+            var GridBox = document.getElementById(Obj.Obj.Position.split("i")[1]);
+            RemoveGridClass(GridBox);
+            addClass(GridBox,"skystone_grid_box_enemy");
+
+            Pos.src = construct_image_src(Obj.Obj);
+            removeClass(Pos, "skystone_unused");
+            addClass(Pos, "skystone");
+
+            PlayerTurn = true;
         break;
     }
 };
@@ -64,6 +80,19 @@ function removeClass(el, className)
 }
 // ------------------------------------
 
+function RemoveGridClass(elem) {
+    if (hasClass(elem,"skystone_grid_box")) {
+        removeClass(elem,"skystone_grid_box");
+    }
+    if (hasClass(elem,"skystone_grid_box_enemy")) {
+        removeClass(elem,"skystone_grid_box_enemy");
+    }
+    if (hasClass(elem,"skystone_grid_box_player")) {
+        removeClass(elem,"skystone_grid_box_player");
+    }
+}
+
+// ------------------------------------
 class Skystone {
     constructor(Name,Element,Top,Right,Bottom,Left,Position) {
       this.Name = Name;
@@ -76,6 +105,7 @@ class Skystone {
     }
 }
 
+var PlayerTurn = false;
 var Selected_SkyStone = null;
 var Selected_SkyStone_Elem = null;
 var Skystones_Hand = {}
@@ -119,11 +149,15 @@ function construct_image_src(SkystoneObj) {
 }
 
 function select_skystone_grid(elem) {
-    if (Selected_SkyStone != null) {
+    if (Selected_SkyStone != null && PlayerTurn) {
         if (hasClass(elem, "skystone_unused")) {
             elem.src = construct_image_src(Selected_SkyStone);
             removeClass(elem, "skystone_unused");
             addClass(elem, "skystone");
+
+            var GridBox = document.getElementById(elem.id.split("i")[1]);
+            RemoveGridClass(GridBox);
+            addClass(GridBox,"skystone_grid_box_player");
 
             removeClass(Selected_SkyStone_Elem,"skystone_hand_selected");
             removeClass(Selected_SkyStone_Elem,"skystone_hand");
@@ -134,6 +168,7 @@ function select_skystone_grid(elem) {
 
             Selected_SkyStone = null;
             Selected_SkyStone_Elem = null;
+            PlayerTurn = false;
         }
     }
 }
