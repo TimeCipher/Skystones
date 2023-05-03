@@ -194,7 +194,7 @@ function CheckForCopy(StoneA, StoneB) {
   return isCopy;
 }
 
-function TakeStone(Plr,StoneA,StoneB) {
+function TakeStone(Plr,StoneA,StoneB,RealPlr) {
   if (Plr.UserId != "ENEMY") {
     if (StoneA.Plr == Plr.UserId) {
       Plr.Connection.send(JSON.stringify(new MessageObj("ChangeControlOfStone_Enemy",StoneA.Stone)));
@@ -202,11 +202,19 @@ function TakeStone(Plr,StoneA,StoneB) {
       Plr.Connection.send(JSON.stringify(new MessageObj("ChangeControlOfStone_User",StoneA.Stone)));
     }
   }
+  if (RealPlr != null) {
+    if (StoneA.Plr == RealPlr.UserId) {
+      RealPlr.Connection.send(JSON.stringify(new MessageObj("ChangeControlOfStone_Enemy",StoneA.Stone)));
+    } else {
+      RealPlr.Connection.send(JSON.stringify(new MessageObj("ChangeControlOfStone_User",StoneA.Stone)));
+    }
+  }
+
   StoneA.Plr = StoneB.Plr;
-  console.log(`${StoneA.Stone.Position} taken by ${StoneB.Stone.Position}`);
+  // console.log(`${StoneA.Stone.Position} taken by ${StoneB.Stone.Position}`);
 }
 
-function PlacedEffectLogic(Table,Plr,PlayerPlaced,PlayedStone) {
+function PlacedEffectLogic(Table,Plr,PlayerPlaced,RealPlr) {
   for (var PlayedStone of Table) {
     if (PlayedStone.Plr != PlayerPlaced.Plr) {
       switch (PlayerPlaced.Stone.Position) {
@@ -214,12 +222,12 @@ function PlacedEffectLogic(Table,Plr,PlayerPlaced,PlayedStone) {
           switch (PlayedStone.Stone.Position) {
             case "iSGB_2":
               if (PlayerPlaced.Stone.Right > PlayedStone.Stone.Left) {
-                TakeStone(Plr,PlayedStone,PlayerPlaced);
+                TakeStone(Plr,PlayedStone,PlayerPlaced,RealPlr);
               }
               break;
             case "iSGB_4":
               if (PlayerPlaced.Stone.Bottom > PlayedStone.Stone.Top) {
-                TakeStone(Plr,PlayedStone,PlayerPlaced);
+                TakeStone(Plr,PlayedStone,PlayerPlaced,RealPlr);
               }
               break;
           }
@@ -228,17 +236,17 @@ function PlacedEffectLogic(Table,Plr,PlayerPlaced,PlayedStone) {
           switch (PlayedStone.Stone.Position) {
             case "iSGB_1":
               if (PlayerPlaced.Stone.Left > PlayedStone.Stone.Right) {
-                TakeStone(Plr,PlayedStone,PlayerPlaced);
+                TakeStone(Plr,PlayedStone,PlayerPlaced,RealPlr);
               }
               break;
             case "iSGB_3":
               if (PlayerPlaced.Stone.Right > PlayedStone.Stone.Left) {
-                TakeStone(Plr,PlayedStone,PlayerPlaced);
+                TakeStone(Plr,PlayedStone,PlayerPlaced,RealPlr);
               }
               break;
             case "iSGB_5":
               if (PlayerPlaced.Stone.Bottom > PlayedStone.Stone.Top) {
-                TakeStone(Plr,PlayedStone,PlayerPlaced);
+                TakeStone(Plr,PlayedStone,PlayerPlaced,RealPlr);
               }
               break;
           }
@@ -247,12 +255,12 @@ function PlacedEffectLogic(Table,Plr,PlayerPlaced,PlayedStone) {
           switch (PlayedStone.Stone.Position) {
             case "iSGB_2":
               if (PlayerPlaced.Stone.Left > PlayedStone.Stone.Right) {
-                TakeStone(Plr,PlayedStone,PlayerPlaced);
+                TakeStone(Plr,PlayedStone,PlayerPlaced,RealPlr);
               }
               break;
             case "iSGB_6":
               if (PlayerPlaced.Stone.Bottom > PlayedStone.Stone.Top) {
-                TakeStone(Plr,PlayedStone,PlayerPlaced);
+                TakeStone(Plr,PlayedStone,PlayerPlaced,RealPlr);
               }
               break;
           }
@@ -261,17 +269,17 @@ function PlacedEffectLogic(Table,Plr,PlayerPlaced,PlayedStone) {
           switch (PlayedStone.Stone.Position) {
             case "iSGB_1":
               if (PlayerPlaced.Stone.Top > PlayedStone.Stone.Bottom) {
-                TakeStone(Plr,PlayedStone,PlayerPlaced);
+                TakeStone(Plr,PlayedStone,PlayerPlaced,RealPlr);
               }
               break;
             case "iSGB_5":
               if (PlayerPlaced.Stone.Right > PlayedStone.Stone.Left) {
-                TakeStone(Plr,PlayedStone,PlayerPlaced);
+                TakeStone(Plr,PlayedStone,PlayerPlaced,RealPlr);
               }
               break;
             case "iSGB_7":
               if (PlayerPlaced.Stone.Bottom > PlayedStone.Stone.Top) {
-                TakeStone(Plr,PlayedStone,PlayerPlaced);
+                TakeStone(Plr,PlayedStone,PlayerPlaced,RealPlr);
               }
               break;
           }
@@ -280,22 +288,22 @@ function PlacedEffectLogic(Table,Plr,PlayerPlaced,PlayedStone) {
           switch (PlayedStone.Stone.Position) {
             case "iSGB_2":
               if (PlayerPlaced.Stone.Top > PlayedStone.Stone.Bottom) {
-                TakeStone(Plr,PlayedStone,PlayerPlaced);
+                TakeStone(Plr,PlayedStone,PlayerPlaced,RealPlr);
               }
               break;
             case "iSGB_6":
               if (PlayerPlaced.Stone.Right > PlayedStone.Stone.Left) {
-                TakeStone(Plr,PlayedStone,PlayerPlaced);
+                TakeStone(Plr,PlayedStone,PlayerPlaced,RealPlr);
               }
               break;
             case "iSGB_7":
               if (PlayerPlaced.Stone.Bottom > PlayedStone.Stone.Top) {
-                TakeStone(Plr,PlayedStone,PlayerPlaced);
+                TakeStone(Plr,PlayedStone,PlayerPlaced,RealPlr);
               }
               break;
             case "iSGB_4":
               if (PlayerPlaced.Stone.Left > PlayedStone.Stone.Right) {
-                TakeStone(Plr,PlayedStone,PlayerPlaced);
+                TakeStone(Plr,PlayedStone,PlayerPlaced,RealPlr);
               }
               break;
           }
@@ -304,17 +312,17 @@ function PlacedEffectLogic(Table,Plr,PlayerPlaced,PlayedStone) {
           switch (PlayedStone.Stone.Position) {
             case "iSGB_3":
               if (PlayerPlaced.Stone.Top > PlayedStone.Stone.Bottom) {
-                TakeStone(Plr,PlayedStone,PlayerPlaced);
+                TakeStone(Plr,PlayedStone,PlayerPlaced,RealPlr);
               }
             break;
             case "iSGB_5":
               if (PlayerPlaced.Stone.Left > PlayedStone.Stone.Right) {
-                TakeStone(Plr,PlayedStone,PlayerPlaced);
+                TakeStone(Plr,PlayedStone,PlayerPlaced,RealPlr);
               }
             break;
             case "iSGB_9":
               if (PlayerPlaced.Stone.Bottom > PlayedStone.Stone.Top) {
-                TakeStone(Plr,PlayedStone,PlayerPlaced);
+                TakeStone(Plr,PlayedStone,PlayerPlaced,RealPlr);
               }
             break;
           }
@@ -323,12 +331,12 @@ function PlacedEffectLogic(Table,Plr,PlayerPlaced,PlayedStone) {
           switch (PlayedStone.Stone.Position) {
             case "iSGB_4":
               if (PlayerPlaced.Stone.Top > PlayedStone.Stone.Bottom) {
-                TakeStone(Plr,PlayedStone,PlayerPlaced);
+                TakeStone(Plr,PlayedStone,PlayerPlaced,RealPlr);
               }
               break;
             case "iSGB_8":
               if (PlayerPlaced.Stone.Right > PlayedStone.Stone.Left) {
-                TakeStone(Plr,PlayedStone,PlayerPlaced);
+                TakeStone(Plr,PlayedStone,PlayerPlaced,RealPlr);
               }
               break;
           }
@@ -337,17 +345,17 @@ function PlacedEffectLogic(Table,Plr,PlayerPlaced,PlayedStone) {
           switch (PlayedStone.Stone.Position) {
             case "iSGB_5":
               if (PlayerPlaced.Stone.Top > PlayedStone.Stone.Bottom) {
-                TakeStone(Plr,PlayedStone,PlayerPlaced);
+                TakeStone(Plr,PlayedStone,PlayerPlaced,RealPlr);
               }
             break;
             case "iSGB_7":
               if (PlayerPlaced.Stone.Left > PlayedStone.Stone.Right) {
-                TakeStone(Plr,PlayedStone,PlayerPlaced);
+                TakeStone(Plr,PlayedStone,PlayerPlaced,RealPlr);
               }
             break;
             case "iSGB_9":
               if (PlayerPlaced.Stone.Right > PlayedStone.Stone.Left) {
-                TakeStone(Plr,PlayedStone,PlayerPlaced);
+                TakeStone(Plr,PlayedStone,PlayerPlaced,RealPlr);
               }
             break;
           }
@@ -356,12 +364,12 @@ function PlacedEffectLogic(Table,Plr,PlayerPlaced,PlayedStone) {
           switch (PlayedStone.Stone.Position) {
             case "iSGB_6":
               if (PlayerPlaced.Stone.Top > PlayedStone.Stone.Bottom) {
-                TakeStone(Plr,PlayedStone,PlayerPlaced);
+                TakeStone(Plr,PlayedStone,PlayerPlaced,RealPlr);
               }
             break;
             case "iSGB_8":
               if (PlayerPlaced.Stone.Left > PlayedStone.Stone.Right) {
-                TakeStone(Plr,PlayedStone,PlayerPlaced);
+                TakeStone(Plr,PlayedStone,PlayerPlaced,RealPlr);
               }
             break;
           }
@@ -371,29 +379,299 @@ function PlacedEffectLogic(Table,Plr,PlayerPlaced,PlayedStone) {
   }
 }
 
-function EnemyPlay(Ai,Table) {
-  var LogicLevel = 0;
+function PlacedEffectLogic2(Table,Plr,PlayerPlaced,RealPlr) {
+  var StonePosInt = ConvertSGB_Int(PlayerPlaced.Position);
+  for (var PlayedStone of Table) {
+    if (PlayedStone.Plr != PlayerPlaced.Plr) {
+     
+    }
+  }
+}
+
+function ConvertSGB_Int(Pos) {
+  var ReturnNum = 0;
+  ReturnNum = Pos.split("_")[1]
+  ReturnNum = int(ReturnNum)
+  return ReturnNum
+}
+
+function EnemyPlay(Ai,Table,RealPlr) {
+  var LogicLevel = 1;
+  // console.log(Ai);
 
   var CheckForCompatibleStone = function(Side,Num) {
-    for (var HandStone in Ai.Hand) {
-      if (HandStone.Position == null) {
+    var ReturnedStone = null;
 
+    for (var HandStone of Ai.Hand) {
+      if (HandStone.Position == null) {
+        switch (Side) {
+          case "Top":
+            if (HandStone.Bottom > Num) {
+              ReturnedStone = HandStone;
+            }
+          break;
+          case "Right":
+            if (HandStone.Left > Num) {
+              ReturnedStone = HandStone;
+            }
+          break;
+          case "Left":
+            if (HandStone.Right > Num) {
+              ReturnedStone = HandStone;
+            }
+          break;
+          case "Bottom":
+            if (HandStone.Top > Num) {
+              ReturnedStone = HandStone;
+            }
+          break;
+        }
       }
     }
+    if (ReturnedStone == null) {
+      for (var HandStone of Ai.Hand) {
+        if (HandStone.Position == null) {
+          switch (Side) {
+            case "Top":
+              if (HandStone.Bottom >= Num) {
+                ReturnedStone = HandStone;
+              }
+            break;
+            case "Right":
+              if (HandStone.Left >= Num) {
+                ReturnedStone = HandStone;
+              }
+            break;
+            case "Left":
+              if (HandStone.Right >= Num) {
+                ReturnedStone = HandStone;
+              }
+            break;
+            case "Bottom":
+              if (HandStone.Top >= Num) {
+                ReturnedStone = HandStone;
+              }
+            break;
+          }
+        }
+      }
+    }
+    if (ReturnedStone == null) {
+      for (var HandStone of Ai.Hand) {
+        if (HandStone.Position == null) {
+          switch (Side) {
+            case "Top":
+              if (HandStone.Bottom <= Num) {
+                ReturnedStone = HandStone;
+              }
+            break;
+            case "Right":
+              if (HandStone.Left <= Num) {
+                ReturnedStone = HandStone;
+              }
+            break;
+            case "Left":
+              if (HandStone.Right <= Num) {
+                ReturnedStone = HandStone;
+              }
+            break;
+            case "Bottom":
+              if (HandStone.Top <= Num) {
+                ReturnedStone = HandStone;
+              }
+            break;
+          }
+        }
+      }
+    }
+
+    return ReturnedStone;
   }
 
   if (LogicLevel == 1) {
     var BestMove = null;
     
-    for (var PlayedStone in Table) {
+    for (var PlayedStone of Table) {
       if (PlayedStone.Plr != "ENEMY") {
         var CurrentStone = PlayedStone.Stone;
-        if (CurrentStone.Top == 1 && CurrentStone.Position != "iSGB_1" && CurrentStone.Position != "iSGB_2" && CurrentStone.Position != "iSGB_3") {
+        var StoneLogic = function(Num) {
+          if (CurrentStone.Top == Num && CurrentStone.Position != "iSGB_1" && CurrentStone.Position != "iSGB_2" && CurrentStone.Position != "iSGB_3") {
+            BestMove = CheckForCompatibleStone("Top",Num);
 
+            if (BestMove != null) {
+              switch (CurrentStone.Position) {
+                case "iSGB_4":
+                  BestMove.Position = "iSGB_1"
+                break;
+                case "iSGB_5":
+                  BestMove.Position = "iSGB_2"
+                break;
+                case "iSGB_6":
+                  BestMove.Position = "iSGB_3"
+                break;
+                case "iSGB_7":
+                  BestMove.Position = "iSGB_4"
+                break;
+                case "iSGB_8":
+                  BestMove.Position = "iSGB_5"
+                break;
+                case "iSGB_9":
+                  BestMove.Position = "iSGB_6"
+                break;
+              }
+            }
+          }
+          if (CurrentStone.Right == Num && CurrentStone.Position != "iSGB_3" && CurrentStone.Position != "iSGB_6" && CurrentStone.Position != "iSGB_9" && BestMove == null) {
+            BestMove = CheckForCompatibleStone("Right",Num);
+
+            if (BestMove != null) {
+              switch (CurrentStone.Position) {
+                case "iSGB_1":
+                  BestMove.Position = "iSGB_2"
+                break;
+                case "iSGB_2":
+                  BestMove.Position = "iSGB_3"
+                break;
+                case "iSGB_4":
+                  BestMove.Position = "iSGB_5"
+                break;
+                case "iSGB_5":
+                  BestMove.Position = "iSGB_6"
+                break;
+                case "iSGB_7":
+                  BestMove.Position = "iSGB_8"
+                break;
+                case "iSGB_8":
+                  BestMove.Position = "iSGB_9"
+                break;
+              }
+            }
+          }
+          if (CurrentStone.Bottom == Num && CurrentStone.Position != "iSGB_7" && CurrentStone.Position != "iSGB_8" && CurrentStone.Position != "iSGB_9" && BestMove == null) {
+            BestMove = CheckForCompatibleStone("Bottom",Num);
+
+            if (BestMove != null) {
+              switch (CurrentStone.Position) {
+                case "iSGB_1":
+                  BestMove.Position = "iSGB_4"
+                break;
+                case "iSGB_2":
+                  BestMove.Position = "iSGB_5"
+                break;
+                case "iSGB_3":
+                  BestMove.Position = "iSGB_6"
+                break;
+                case "iSGB_4":
+                  BestMove.Position = "iSGB_7"
+                break;
+                case "iSGB_5":
+                  BestMove.Position = "iSGB_8"
+                break;
+                case "iSGB_6":
+                  BestMove.Position = "iSGB_9"
+                break;
+              }
+            }
+          }
+          if (CurrentStone.Left == Num && CurrentStone.Position != "iSGB_1" && CurrentStone.Position != "iSGB_4" && CurrentStone.Position != "iSGB_7" && BestMove == null) {
+            BestMove = CheckForCompatibleStone("Left",Num);
+
+            if (BestMove != null) {
+              switch (CurrentStone.Position) {
+                case "iSGB_2":
+                  BestMove.Position = "iSGB_1"
+                break;
+                case "iSGB_3":
+                  BestMove.Position = "iSGB_2"
+                break;
+                case "iSGB_5":
+                  BestMove.Position = "iSGB_4"
+                break;
+                case "iSGB_6":
+                  BestMove.Position = "iSGB_5"
+                break;
+                case "iSGB_8":
+                  BestMove.Position  = "iSGB_7"
+                break;
+                case "iSGB_9":
+                  BestMove.Position = "iSGB_8"
+                break;
+              }
+            }
+          }
+          for (var PlayedStonePos of Table) {
+            if (BestMove != null) {
+              if (PlayedStonePos.Stone.Position == BestMove.Position) {
+                BestMove.Position = null;
+                BestMove = null;
+              }
+            }
+          }
+
+          // for (var HandStone of Ai.Hand) {
+          //   for (var SecondStone of Ai.Hand) {
+          //     if (HandStone.Position == SecondStone.Position) {
+          //       SecondStone.Position = null;
+          //     }
+          //   }
+          // }
+        }
+
+        // var Num = 0;
+        // while (BestMove == null) {
+        //   Num += 1;
+        //   if (Num = 5) {
+        //     Num = 1;
+        //   }
+        //   StoneLogic(Num);
+        // }
+
+        if (BestMove == null) {
+          StoneLogic(1);
+        }
+        if (BestMove == null) {
+          StoneLogic(2);
+        }
+        if (BestMove == null) {
+          StoneLogic(3);
+        }
+        if (BestMove == null) {
+          StoneLogic(4);
         }
       }
     }
 
+    if (BestMove == null) {
+      for (var HandStone of Ai.Hand) {
+        console.log(HandStone);
+        if (HandStone.Position == null) {
+          BestMove = HandStone;
+          var Bnum = 0;
+          while (BestMove.Position == null) {
+            Bnum += 1;
+            BestMove.Position = `iSGB_${Bnum}`;
+            console.log(Bnum);
+            for (var PlayedStonePos of Table) {
+              if (PlayedStonePos.Stone.Position == BestMove.Position) {
+                BestMove.Position = null;
+              }
+            }
+
+            if (Bnum > 9) {
+              break;
+            }
+          }
+        }
+      }
+    }
+
+    var WrappedBestMove = new PlayedWrapper(Ai.UserId,BestMove);
+    console.log(WrappedBestMove);
+    if (BestMove != null) {
+      PlacedEffectLogic(Table,Ai,WrappedBestMove,RealPlr);
+      Table.push(WrappedBestMove);
+      RealPlr.Connection.send(JSON.stringify(new MessageObj("EnemyPlayStone",BestMove)));
+    }
   }
 }
 
@@ -403,16 +681,20 @@ function Handle_Game(Plr) {
   var Table = [];
   var StonesPlaced = 0;
 
+  for (var HandStone of Ai.Hand) {
+    HandStone.Position = null;
+  }
+
   //Set User Hand
   Plr.Connection.send(JSON.stringify(new MessageObj("SetUsrHand",Plr.Hand)));
   // Plr.Connection.send()
-  Ai.Hand[1].Position = "iSGB_3";
+  Ai.Hand[1].Position = "iSGB_6";
   Plr.Connection.send(JSON.stringify(new MessageObj("EnemyPlayStone",Ai.Hand[1])));
   Table.push(new PlayedWrapper("ENEMY",Ai.Hand[1]));
   StonesPlaced += 1;
 
   Plr.Connection.on('message', function message(data) {
-    console.log('received: %s', data);
+    // console.log('received: %s', data);
     var Obj = JSON.parse(data);
 
     if (Obj.Cmd == "PlayUsrStone") {
@@ -429,14 +711,19 @@ function Handle_Game(Plr) {
         }
       }
 
-      console.log(`Player PLaced at: ${PlayerPlaced.Stone.Position}`);
+      // console.log(`Player Placed at: ${PlayerPlaced.Stone.Position}`);
       // Plr.Connection.send(JSON.stringify(new MessageObj("ChangeControlOfStone_User",PlayerPlaced.Stone)));
       StonesPlaced += 1;
 
-      PlacedEffectLogic(Table,Plr,PlayerPlaced,PlayedStone);
+      PlacedEffectLogic(Table,Plr,PlayerPlaced,null);
 
       Table.push(PlayerPlaced);
-      EnemyPlay(Ai,Table);
+      EnemyPlay(Ai,Table,Plr);
+      StonesPlaced += 1;
+
+      if (StonesPlaced == 9) {
+
+      }
     }
   });
 }
